@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+
+</head>
+<body >
+<div th:fragment="navbar">
+    <header class="row">
+        <div class="col">
+<!--            <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color:#FFEFD5">-->
+<!--                <div class="container-fluid">-->
+<!--                    <img  src="/images/logo.png" width="70px" alt="">-->
+<!--                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                        <span class="navbar-toggler-icon"></span>-->
+<!--                    </button>-->
+<!--                    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link active ml-3" aria-current="page" th:href="@{/home}">Home</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link ml-3" href="#">Manage Customer</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link ml-3" th:href="@{/admin/categories/searchpaginated}">Manage Category</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link ml-3" th:href="@{/admin/products/searchpaginated}">Manage Product</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link ml-3" href="#">Manage Order</a>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link ml-3" th:href="@{/admin/accounts}">Manage Profile</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <form class="d-flex float-right" role="search">-->
+<!--                            <input class="form-control ml-5" type="search" placeholder="Search" aria-label="Search">-->
+<!--                            <button class="btn btn-outline-success ml-3" type="submit">Search</button>-->
+<!--                        </form>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </nav>-->
+            <nav class="navbar navbar-expand-xl navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
+                    <h1 class="tm-site-title mb-0">Admin Dashboard</h1>
+                </a>
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/customers/searchpaginated}">Customer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/categories/searchpaginated}">Category</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/products/searchpaginated}">Product</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/accounts/searchpaginated}">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/orders/searchpaginated}">Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin/orderDetails/searchpaginated}">Order Detail</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex" href="login.html">
+                                <i class="far fa-user mr-2 tm-logout-icon"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+</div>
+</body>
+</html>

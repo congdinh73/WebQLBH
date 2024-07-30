@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+  <head>
+  </head>
+  <body>
+  <section class="row " layout:fragment="content">
+      <div class="col mt-4">
+          <form action="" method="post">
+              <div class="card">
+                  <div class="card-header">
+                      <div class="float-right">
+                          <a class="btn btn-outline-primary" th:href="@{/admin/orders/add}">Add new
+                              Order</a>
+                      </div>
+                      <h3>Customer List</h3>
+                  </div>
+                  <div class="card-body">
+                      <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                          <i th:text="${message}"></i>
+                      </div>
+                      <div class="mb-3">
+                          <div
+                                  class="table-responsive"
+                          >
+                              <table
+                                      class="table table-bordered"
+                              >
+                                  <thead>
+                                  <tr>
+                                      <th scope="col">Order ID</th>
+                                      <th scope="col">Amount</th>
+                                      <th scope="col">Customer ID</th>
+                                      <th scope="col">Status</th>
+                                      <th scope="col">Action</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr class=""  th:each="item ,iStat : ${orders}">
+                                      <td scope="row" th:text="${item.orderId}"></td>
+                                      <td scope="row" th:text="${item.amount}"></td>
+                                      <td scope="row" th:text="${item.customer.customerId}"></td>
+                                      <td scope="row" th:text="${item.status}"></td>
+                                      <td>
+                                          <a href="" class="btn btn-outline-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                          <a th:href="@{'/admin/orders/edit/' + ${item.orderId}}" class="btn btn-outline-warning"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                          <a th:href="@{'/admin/orders/delete/' + ${item.orderId}}" class="btn btn-outline-danger"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+                                      </td>
+                                  </tr>
+                                  <tr class="">
+
+
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+
+                      </div>
+                      <div class="card-footer text-muted">
+                          <nav aria-label="Page navigation">
+                              <ul
+                                      class="pagination justify-content-center    "
+                              >
+                                  <li class="page-item disabled">
+                                      <a class="page-link" href="#" aria-label="Previous">
+                                          <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                  </li>
+                                  <li class="page-item active" aria-current="page">
+                                      <a class="page-link" href="#">1</a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item">
+                                      <a class="page-link" href="#">3</a>
+                                  </li>
+                                  <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Next">
+                                          <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </nav>
+
+                      </div>
+                  </div>
+          </form>
+      </div>
+  </section>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}"
+>
+<head>
+
+</head>
+<body>
+<main class="container">
+    <section class="row" layout:fragment="content">
+        <div class="col mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Customer List</h3>
+                </div>
+                <div class="card-body">
+                    <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                        <i th:text="${message}"></i>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col">
+                            <form th:action="@{/admin/customers/searchpaginated}">
+                                <div class="form-inline float-left d-flex">
+                                    <label class="mt-2">Name:</label>
+                                    <input type="text" class="form-control ml-2" name="name" id="name"
+                                           placeholder="Customer Name"/>
+                                    <button class="btn btn-primary ml-2" style="height: 50px">Search</button>
+                                </div>
+                            </form>
+                            <div class="float-right">
+                                <a class="btn btn-outline-primary" th:href="@{/admin/customers/add}">Add new
+                                    Customer</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" th:if="${!customerPage.hasContent()}">
+                        <div class="col">
+                            <div class="alert alert-primary" role="alert">
+                                <strong>No customer found</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" th:if="${customerPage.hasContent()}">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Customer ID</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="" th:each="customer, istat : ${customerPage.content}">
+                                    <td th:text="${customer.customerId}"></td>
+                                    <td th:text="${customer.name}"></td>
+                                    <td th:text="${customer.email}"></td>
+                                    <td th:text="${customer.status}"></td>
+                                    <td class="mr-3">
+                                        <a th:href="@{'/admin/categories/view/' + ${customer.customerId}}"
+                                           class="btn btn-outline-info"><i class="fa fa-info-circle"
+                                                                           aria-hidden="true"></i></a>
+                                        <a th:href="@{'/admin/customers/edit/' + ${customer.customerId}}"
+                                           class="btn btn-outline-warning"><i class="fa fa-edit"
+                                                                              aria-hidden="true"></i></a>
+                                        <a
+                                                th:data-id="${customer.customerId}"
+                                                th:data-name="${customer.name}"
+                                                onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                                                class="btn btn-outline-danger mr-3"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <script>
+                            function showConfirmModalDialog(id, name) {
+                                $('#productName').text(name);
+                                $('#yesOption').attr('href' , '/admin/customers/delete/' + id);
+                                $('#confirmationId').modal('show');
+                            }
+                        </script>
+
+                        <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"
+                             aria-labelledby="modelTitleId" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="model-header">
+                                        <h5 class="model-title text-center" >Confirmation</h5>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete customer: "<span  id="productName"></span>"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a id="yesOption" type="button" class="btn btn-outline-danger">Yes</a>
+                                        <button type="button" class="btn btn-primary"
+                                                data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        <form action="">
+                            <div class="form-inline float-left d-flex">
+                                <label for="size" class="mr-2">Page Size</label>
+                                <select class="form-select form-select" aria-label="Small select example" name="size"
+                                        id="size" onchange="this.form.submit()">
+                                    <option th:selected="${customerPage.size == 5}" value="5">5</option>
+                                    <option th:selected="${customerPage.size == 10}" value="10">10</option>
+                                    <option th:selected="${customerPage.size == 15}" value="15">15</option>
+                                    <option th:selected="${customerPage.size == 20}" value="20">20</option>
+                                </select>
+                            </div>
+                        </form>
+                        <nav aria-label="Page navigation"
+                             th:if="${customerPage.totalPages > 0}">
+                            <ul class="pagination justify-content-center">
+                                <li th:class="${ 1 == customerPage.number + 1} ? 'page-item actice' : 'page-item'">
+                                    <a th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${1})}"
+                                       class="page-link">First Page</a>
+                                </li>
+                                <li class="page-item active"
+                                    th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${customerPage.totalPages > 1}"
+                                    th:class="${pageNumber == customerPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${pageNumber})}"
+                                       class="page-link" th:text="${pageNumber}"></a>
+                                </li>
+
+                                <li th:class="${customerPage.totalPages == customerPage.number + 1} ? 'page-item actice' : 'page-item'">
+                                    <a th:href="@{/admin/customers/searchpaginated(name=${name}, size=${customerPage.size}, page=${customerPage.totalPages})}"
+                                       class="page-link">Last Page</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+<head>
+
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="col-6 offset-3 mt-4">
+        <form th:action="@{/admin/categories/saveOrUpdate}" method="post" th:object="${category}">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Add New Category</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category ID:</label>
+                        <input type="hidden" name="" th:field="*{isEdit}">
+                        <input
+                                type="text"
+                                class="form-control"
+                                th:field="*{categoryId}"
+                                aria-describedby="helpId"
+                                placeholder="Category ID"
+                                readonly
+                        />
+                        <small th:if="${#fields.hasErrors('categoryId')}" class="form-text text-muted"
+                        >Category ID is required or invalid</small
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name:</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                th:field="*{name}"
+                                aria-describedby="helpId"
+                                placeholder="Category Name"
+                        />
+                        <small th:if="${#fields.hasErrors('name')}" class="form-text text-muted"
+                        >Category Name is required or invalid</small
+                        >
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i> <span th:if="${category.isEdit}">Update</span>
+                        <span th:if="${!category.isEdit}">Save</span>
+                    </button>
+
+                    <button type="reset" class="btn btn-primary">Reset</button>
+
+                    <a th:href="@{/admin/categories/searchpaginated}" class="btn btn-success">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        List category</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+</body>
+</html>

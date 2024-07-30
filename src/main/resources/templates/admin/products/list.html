@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}"
+>
+<head>
+
+</head>
+<body>
+<main class="container">
+    <section class="row" layout:fragment="content">
+        <div class="col offset mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Product List</h3>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                            <i th:text="${message}"></i>
+                        </div>
+
+                        <div class="mb-3">
+                            <div
+                                    class="table-responsive"
+                            >
+                                <table
+                                        class="table table-bordered"
+                                >
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" class="form-check-input"></th>
+                                        <th></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Discount</th>
+                                        <th>Status</th>
+                                        <th>Category</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="" th:each="item, iStart: ${products}">
+                                        <td><input type="checkbox" name="" id="" class="form-check-inline"></td>
+                                        <td><img th:src="@{'/uploads/images' + item.image}" width="70px" alt="" class="img-fluid"></td>
+                                        <td th:text="${item.name}"></td>
+                                        <td th:text="${item.quantity}"></td>
+                                        <td th:text="${item.unitPrice}"></td>
+                                        <td th:text="${item.discount}"></td>
+                                        <td th:text="${item.status}"></td>
+                                        <td th:text="${item.category.name}"></td>
+                                        <td>
+                                            <a th:href="@{'/admin/products/view/' + ${item.productId}}" class="btn btn-outline-info mr-3"><i class="fa fa-info-circle"
+                                                                                                                                            aria-hidden="true"></i></a>
+                                            <a th:href="@{'/admin/products/edit/' + ${item.productId}}" class="btn btn-outline-warning mr-3"><i class="fa fa-edit"
+                                                                                                                                               aria-hidden="true"></i></a>
+                                            <a th:href="@{'/admin/products/delete/' + ${item.productId}}" class="btn btn-outline-danger mr-3"><i class="fa fa-recycle"
+                                                                                                                                                aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="card-footer text-muted">
+                            <form action="" method="get">
+                                <div class="form-group">
+                                    <label for="">Page Size</label>
+                                    <select name="" class="form-inline">
+                                        <option value="">5</option>
+                                        <option value="">10</option>
+                                        <option value="">20</option>
+                                    </select>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

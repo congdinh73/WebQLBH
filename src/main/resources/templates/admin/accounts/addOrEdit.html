@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+<head>
+
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="col-6 offset-3 mt-4">
+        <form th:action="@{/admin/accounts/saveOrUpdate}" method="post" th:object="${account}">
+            <div class="card">
+                <div class="card-header">
+                    <h2 th:if="${account.isEdit ? 'Edit Account' : 'Add New Account'}">Add New Account</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Username:</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                th:field="*{username}"
+                                aria-describedby="helpId"
+                                placeholder="Username"
+
+                        />
+                        <small th:if="${#fields.hasErrors('username')}" class="form-text text-muted"
+                        >Username is required or invalid</small
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password:</label>
+                        <input
+                                type="password"
+                                class="form-control"
+                                th:field="*{password}"
+                                aria-describedby="helpId"
+                                placeholder="Password"
+                        />
+                        <small th:if="${#fields.hasErrors('password')}" class="form-text text-muted"
+                        >Password is required or invalid</small
+                        >
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i><span th:if="${account.isEdit}">Update</span>
+                        <span th:if="${!account.isEdit}">Save</span>
+                    </button>
+
+                    <button type="reset" class="btn btn-primary">Reset</button>
+
+                    <a th:href="@{/admin/accounts}" class="btn btn-success"><i class="fa fa-list"
+                                                                                                 aria-hidden="true"></i>
+                        List account</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+</body>
+</html>

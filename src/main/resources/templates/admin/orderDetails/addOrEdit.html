@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+  <head>
+  </head>
+  <body>
+  <section class="row float-left offset-3" style="width: 700px;" layout:fragment="content">
+    <div class="col mt-4">
+      <form action="/admin/orderDetails/saveOrUpdate" method="post" th:object="${orderDetail}">
+        <div class="card">
+          <div class="card-header">
+            <h2>New Order Detail</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <div class="mb-3">
+                    <label class="form-label">Order Detail ID:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="customerId"
+                            id="customerId"
+                            aria-describedby="helpId"
+                            placeholder="Order ID"
+                            th:field="*{orderDetailId}"
+                            readonly
+                    />
+                    <small class="form-text text-muted"
+                    >Order Detail ID is required</small
+                    >
+                  </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Unit Price:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            aria-describedby="helpId"
+                            placeholder="Oder Detail"
+                            th:field="*{unitPrice}"
+                    />
+                    <small class="form-text text-muted"
+                    > Unit Price is required</small
+                    >
+                  </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Quantity:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            id="name"
+                            aria-describedby="helpId"
+                            placeholder="Oder Amount"
+                            th:field="*{quantity}"
+                    />
+                    <small class="form-text text-muted"
+                    > Quantity is required</small
+                    >
+                  </div>
+
+                </div>
+                <div class="mb-3">
+                  <label  class="form-label">Order ID:</label>
+                  <select class="form-select form-select" aria-label="Small select example" th:field="*{orderId}">
+                    <option value="1" th:each="item : ${orders}" th:value="${item.orderId}" th:text="${item.orderId}"></option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label  class="form-label">Product ID:</label>
+                <select class="form-select form-select" aria-label="Small select example" th:field="*{productId}">
+                  <option value="1" th:each="item : ${products}" th:value="${item.productId}" th:text="${item.name}"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <button class="btn btn-primary">
+              <i class="fa fa-save" aria-hidden="true"></i> <span th:if="${orderDetail.isEdit}">Update</span>
+              <span th:if="${!orderDetail.isEdit}">Save</span>
+            </button>
+            <button class="btn btn-primary" type="reset">Reset</button>
+            <a th:href="@{/admin/orderDetails}" class="btn btn-success float-right"><i class="fa fa-list" aria-hidden="true"></i>
+              List order detail</a>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+<head>
+</head>
+<body layout:fragment="content">
+<section class="row float-left offset-3" style="width: 700px">
+    <div class="col mt-4">
+        <form action="/admin/orders/saveOrUpdate" method="post" th:object="${order}">
+            <div class="card">
+                <div class="card-header">
+                    <h2>New Order</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label class="form-label">Customer ID:</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="customerId"
+                                            id="customerId"
+                                            aria-describedby="helpId"
+                                            placeholder="Order ID"
+                                            th:field="*{orderId}"
+                                            readonly
+                                    />
+                                    <small class="form-text text-muted"
+                                    >Order ID is required</small
+                                    >
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Amount:</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="name"
+                                            id="name"
+                                            aria-describedby="helpId"
+                                            placeholder="Oder Amount"
+                                            th:field="*{amount}"
+                                    />
+                                    <small class="form-text text-muted"
+                                    >Order amount is required</small
+                                    >
+                                </div>
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Customer:</label>
+                                <select class="form-select form-select" aria-label="Small select example"
+                                        th:field="*{customerId}">
+                                    <option value="1" th:each="item : ${customers}" th:value="${item.customerId}"
+                                            th:text="${item.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Status:</label>
+                            <select class="form-select form-select" aria-label="Small select example"
+                                    th:field="*{status}">
+                                <option value="1">Pending</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button class="btn btn-primary">
+                        <i class="fa fa-save" aria-hidden="true"></i> <span th:if="${order.isEdit}">Update</span>
+                        <span th:if="${!order.isEdit}">Save</span>
+                    </button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <a th:href="@{/admin/orders}" class="btn btn-success float-right"><i class="fa fa-list" aria-hidden="true"></i>
+                        List order</a>
+                </div>
+
+        </form>
+
+    </div>
+</section>
+</body>
+</html>

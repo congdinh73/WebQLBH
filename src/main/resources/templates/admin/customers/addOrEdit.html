@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}">
+  <head>
+  </head>
+  <body>
+  <section class="row float-left offset-3" style="width: 700px" layout:fragment="content">
+    <div class="col mt-4">
+      <form action="/admin/customers/saveOrUpdate" method="post" th:object="${customer}" >
+        <div class="card">
+          <div class="card-header">
+            <h2>New Customer</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <div class="mb-3">
+                    <label class="form-label">Customer ID:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="customerId"
+                            id="customerId"
+                            aria-describedby="helpId"
+                            placeholder="Customer ID"
+                            th:field="*{customerId}"
+                            readonly
+                    />
+                    <small class="form-text text-muted"
+                    >Customer ID is required</small
+                    >
+                  </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Name:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            id="name"
+                            aria-describedby="helpId"
+                            placeholder="Customer Name"
+                            th:field="*{name}"
+                    />
+                    <small class="form-text text-muted"
+                    >Customer name is required</small
+                    >
+                  </div>
+
+                  <div class="mb-3">
+                    <label  class="form-label">Email:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="email"
+                            id="email"
+                            aria-describedby="helpId"
+                            placeholder="Email"
+                            th:field="*{email}"
+                    />
+                    <small  class="form-text text-muted"
+                    >Email is required</small
+                    >
+                  </div>
+
+                  <div class="mb-3">
+                    <label  class="form-label">Phone:</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            name="password"
+                            id="phone"
+                            aria-describedby="helpId"
+                            placeholder="Phone number"
+                            th:field="*{phone}"
+                    />
+
+                  </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Password:</label>
+                    <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            id="password"
+                            aria-describedby="helpId"
+                            placeholder="Password"
+                            th:field="*{password}"
+                    />
+                    <small id="helpId" class="form-text text-muted"
+                    >Password is required</small
+                    >
+                  </div>
+
+                  <div class="mb-3">
+                    <label  class="form-label">Status:</label>
+                    <select class="form-select form-select" aria-label="Small select example" th:field="*{status}">
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-muted">
+                <button class="btn btn-primary">
+                  <i class="fa fa-save" aria-hidden="true"></i> <span th:if="${customer.isEdit}">Update</span>
+                  <span th:if="${!customer.isEdit}">Save</span>
+                </button>
+                <button class="btn btn-primary" type="reset">Reset</button>
+                <a th:href="@{/admin/customers/searchpaginated}" class="btn btn-success float-right"><i class="fa fa-list" aria-hidden="true"></i>
+                  List customer</a>
+              </div>
+      </form>
+
+    </div>
+  </section>
+  </body>
+</html>

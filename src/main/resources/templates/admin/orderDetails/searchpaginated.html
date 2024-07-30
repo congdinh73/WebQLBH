@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dasboardLayout.html}"
+>
+<head>
+
+</head>
+<body>
+<main class="container">
+    <section class="row" layout:fragment="content">
+        <div class="col mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Order Detail List</h3>
+                </div>
+                <div class="card-body">
+                    <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                        <i th:text="${message}"></i>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col">
+                            <form th:action="@{/admin/orderDetails/searchpaginated}">
+                                <div class="form-inline float-left d-flex">
+                                    <label class="mt-2">Name:</label>
+                                    <input type="text" class="form-control ml-2" name="orderDetailId" id="name"
+                                           placeholder="Order Detail ID"/>
+                                    <button class="btn btn-small btn-primary ml-2" style="height: 50px">Search</button>
+                                </div>
+                            </form>
+                            <div class="float-right">
+                                <a class="btn btn-outline-primary" th:href="@{/admin/orderDetails/add}">Add new Order Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" th:if="${!page.hasContent()}">
+                        <div class="col">
+                            <div class="alert alert-primary" role="alert">
+                                <strong>No order detail found</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" th:if="${page.hasContent()}">
+                                <thead>
+                                <tr>
+                                <tr>
+                                    <th scope="col">Order Detail ID</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Price</th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Product ID</th>
+                                    <th scope="col">Product Name</th>
+                                </tr>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="" th:each="item, istat : ${page.content}">
+                                    <td scope="row" th:text="${item.orderDetailId}"></td>
+                                    <td scope="row" th:text="${item.quantity}"></td>
+                                    <td scope="row" th:text="${item.unitPrice}"></td>
+                                    <td scope="row" th:text="${item.order.orderId}"></td>
+                                    <td scope="row" th:text="${item.product.productId}"></td>
+                                    <td scope="row" th:text="${item.product.name}"></td>
+                                    <td class="mr-3">
+                                        <a href="" class="btn btn-outline-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                        <a th:href="@{'/admin/orderDetails/edit/' + ${item.orderDetailId}}" class="btn btn-outline-warning"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a
+                                                th:data-id="${item.orderDetailId}"
+                                                th:data-name="${item.orderDetailId}"
+                                                onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                                                class="btn btn-outline-danger mr-3"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <script>
+                            function showConfirmModalDialog(id, name) {
+                                $('#productName').text(name);
+                                $('#yesOption').attr('href' , '/admin/orderDetails/delete/' + id);
+                                $('#confirmationId').modal('show');
+                            }
+                        </script>
+
+                        <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"
+                             aria-labelledby="modelTitleId" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="model-header">
+                                        <h5 class="model-title text-center" >Confirmation</h5>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete Order Detail ID: "<span  id="productName"></span>"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a id="yesOption" type="button" class="btn btn-outline-danger">Yes</a>
+                                        <button type="button" class="btn btn-primary"
+                                                data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                        <form action="">
+                            <div class="form-inline float-left d-flex">
+                                <label for="size" class="mr-2">Page Size</label>
+                                <select class="form-select form-select" name="size" id="size" onchange="this.form.submit()">
+                                    <option th:selected="${page.size == 5}" value="5" >5</option>
+                                    <option th:selected="${page.size == 10}"  value="10">10</option>
+                                    <option  th:selected="${page.size == 15}" value="15">15</option>
+                                    <option th:selected="${page.size == 20}" value="20">20</option>
+                                </select>
+                            </div>
+                        </form>
+                        <nav aria-label="Page navigation"
+                             th:if="${page.totalPages > 0}">
+                            <ul class="pagination justify-content-center">
+                                <li th:class="${ 1 == page.number + 1} ? 'page-item actice' : 'page-item'">
+                                    <a th:href="@{/admin/orderDetails/searchpaginated(name=${name}, size=${page.size}, page=${1})}"
+                                       class="page-link">First Page</a>
+                                </li>
+                                <li class="page-item active"
+                                    th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${page.totalPages > 1}"
+                                    th:class="${pageNumber == page.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a th:href="@{/admin/orderDetails/searchpaginated(name=${name}, size=${page.size}, page=${pageNumber})}"
+                                       class="page-link" th:text="${pageNumber}"></a>
+                                </li>
+
+                                <li th:class="${page.totalPages == page.number + 1} ? 'page-item actice' : 'page-item'">
+                                    <a th:href="@{/admin/orderDetails/searchpaginated(name=${name}, size=${page.size}, page=${page.totalPages})}"
+                                       class="page-link">Last Page</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
